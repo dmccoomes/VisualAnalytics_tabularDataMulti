@@ -36,6 +36,7 @@ The word descriptive is used because our intention is not to go beyond the units
 This time, I will use the [data about city safety](https://jpn.nec.com/en/global/ad/insite/download/economist/en/data_workbook_dl.html):
 
 ```{r, eval=FALSE}
+install.packages("openxlsx")
 library(openxlsx)
 link="https://github.com/EvansDataScience/data/raw/master/safeCitiesIndexAll.xlsx"
 
@@ -78,8 +79,9 @@ Trying to plot all the variables with this approach will not be the right choice
 We can still plot the correlations, but we need extra help:
 
 ```{r, eval=FALSE}
-library(ggplot2)
-library(GGally) # may need to install
+#library(ggplot2)
+#install.packages("GGally")
+#library(GGally) # may need to install
 
 ggcorr(safe[,-1], # all but the first column
        hjust = 0.9,# distance to plot (diagonal)
@@ -266,6 +268,8 @@ str(safe2x)
 This is a simpler approach, when data is ready:
 
 ```{r, fig.width=15, fig.height=10, eval=FALSE}
+install.packages("ggiraph", dep=TRUE)
+install.packages("ggiraphExtra", dep=TRUE)
 library(ggiraph)
 library(ggiraphExtra)
 
@@ -301,6 +305,7 @@ A first approach would be to use a technique called **PCA** (principal component
 1. Install/Activate the library. There are many libraries for PCA, let's use this one:
 
 ```{r, eval=FALSE}
+install.packages("psych")
 library(psych)
 ```
 
@@ -402,6 +407,7 @@ ggplot(safeIO, aes(x= indexSafeIN, y= indexSafeOUT, label=city)) +
 As before, we can try using text repelling:
 
 ```{r, eval=FALSE}
+install.packages("ggrepel")
 library(ggrepel)
 set.seed(123)
 
@@ -481,12 +487,16 @@ There is a very important algorithm that can be used when you have mappings like
 The minimal amount of cases can be considered in this case is the amount of dimensions plus one, then we choose three. And the minimal distance is usually obtained from this plot, where thirty seems the moment when the 'elbow' starts:
 
 ```{r, eval=FALSE}
+install.packages("dbscan")
 library(dbscan)
 kNNdistplot(coordinates[,c(1,2)], k = 3) # notice we use the coordinates
 abline(h=30, col = "red", lty=2)
 ```
 
 ```{r, eval=FALSE}
+install.packages("fpc", dep=TRUE)
+install.packages("robustbase", type="binary")
+#library("robustbase")
 library("fpc")
 # Compute DBSCAN using fpc package
 
@@ -495,6 +505,7 @@ db_res <- fpc::dbscan(coordinates[,c(1,2)], eps = 30, MinPts = 3)
 
 # Plot DBSCAN results
 #devtools::install_github("kassambara/factoextra")
+install.packages("factoextra")
 library("factoextra")
 fviz_cluster(db_res, coordinates[,c(1,2)], stand = FALSE, 
              geom = 'text',
@@ -528,6 +539,9 @@ A helpful plot will help us show the effecto of those coefficients (HEALTH and I
 For that, I need the help of these packages:
 
 ```{r, eval=FALSE}
+install.packages("dotwhisker")
+install.packages("broom")
+install.packages("dplyr")
 library(dotwhisker)
 library(broom)
 library(dplyr)
@@ -607,6 +621,7 @@ An easy way to interpret those values, as the effect on the probability of ocurr
 
 
 ```{r, eval=FALSE}
+install.packages("margins")
 library(margins)
 margins_logit_PERSONAL = margins(logit_PERSONAL) 
 
